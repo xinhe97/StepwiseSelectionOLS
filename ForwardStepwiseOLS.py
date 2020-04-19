@@ -94,7 +94,6 @@ class ForwardStepwiseOLS(BaseEstimator):
         return y_pred
 
     def get_params(self, deep=True):
-        # suppose this estimator has parameters "alpha" and "recursive"
         return {"fK": self.fK}
 
     def set_params(self, **parameters):
