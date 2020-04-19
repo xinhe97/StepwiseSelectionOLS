@@ -11,3 +11,8 @@ This package is compatible to sklearn. Examples on `Pipeline` and `GridSearchCV`
 
 
 ## BestSubsetOLS
+
+
+# Reference
+
+https://github.com/scikit-learn-contrib/project-template/blob/master/skltemplate/_template.py
