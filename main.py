@@ -1,4 +1,5 @@
 from ForwardStepwiseOLS import *
+from BackwardStepwiseOLS import *
 
 # DGP
 # Spare signals
@@ -35,11 +36,24 @@ DF_prediction = DF.drop(index=train_index)
 
 ###### GridSearchCV ######
 
+# forward
 param_grid_pipe_fwd = {
     'fwd__fK': [1,2,3,4,5,6,7,8,9,10]
 }
 pipe = Pipeline(steps=[('fwd', ForwardStepwiseOLS())])
 search = GridSearchCV(estimator=pipe, cv=5, param_grid=param_grid_pipe_fwd, n_jobs=-1)
+search.fit(DF_estimation.drop('y',1), DF_estimation['y'])
+
+print(search.best_params_)
+print(search.cv_results_)
+
+# backward
+# the hyperparameter fK: is the least number of features included
+param_grid_pipe_bwd = {
+    'bwd__fK': [1,2,3,4,5,6,7,8,9,10]
+}
+pipe = Pipeline(steps=[('bwd', BackwardStepwiseOLS())])
+search = GridSearchCV(estimator=pipe, cv=5, param_grid=param_grid_pipe_bwd, n_jobs=-1)
 search.fit(DF_estimation.drop('y',1), DF_estimation['y'])
 
 print(search.best_params_)

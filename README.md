@@ -7,11 +7,23 @@ This package is compatible to sklearn. Examples on `Pipeline` and `GridSearchCV`
 
 2020-04-19
 
+**Hyperparameter**
+
+`fK`: at most `fK` number of features are selected
+
 ## BackwardStepwiseOLS
 
+2020-04-29
+
+**Hyperparameter**
+
+`fK`: at least `fK` number of features are selected, $fK>=1$
 
 ## BestSubsetOLS
 
+**Hyperparameter**
+
+`fK`: exactly `fK` number of features are selected
 
 # Reference
 
