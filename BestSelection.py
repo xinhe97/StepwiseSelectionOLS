@@ -83,40 +83,40 @@ class BestSubsetSelection(BaseEstimator):
     def score(self, X, y_true):
         return r2_score(y_true, self.predict(X))
  
- 
-N = 1000
-P = 10 # Total number of inputs
+if __name__ == '__main__': 
+    N = 1000
+    P = 10 # Total number of inputs
 
-N_true_inputs = 5
-N_false_inputs = P - N_true_inputs
-n_obs = N/2
-n_pred = N/2
-error_sd = 1
+    N_true_inputs = 5
+    N_false_inputs = P - N_true_inputs
+    n_obs = N/2
+    n_pred = N/2
+    error_sd = 1
 
-# True inputs have coefficient 1
-beta = np.matrix(np.zeros((P,1)))
-beta[:N_true_inputs, :] = 1
+    # True inputs have coefficient 1
+    beta = np.matrix(np.zeros((P,1)))
+    beta[:N_true_inputs, :] = 1
 
-# stimulate the data
-X = np.matrix(np.random.rand(N,P))
-epsilon = np.matrix(error_sd*np.random.normal(0, size= (N,1)))
-y = X*beta + epsilon
+    # stimulate the data
+    X = np.matrix(np.random.rand(N,P))
+    epsilon = np.matrix(error_sd*np.random.normal(0, size= (N,1)))
+    y = X*beta + epsilon
 
-# Pack the data into a dataframe
-DF = pd.concat([pd.DataFrame(X), pd.DataFrame(y)], axis = 1)
-new_names_true = ['x_true_'+str(i) for i in range(1, N_true_inputs + 1)]
-new_names_false = ['x_true_' +str(i) for i in range (1, N_false_inputs +1)]
-names = new_names_true + new_names_false + ['y']
-DF.columns = names
+    # Pack the data into a dataframe
+    DF = pd.concat([pd.DataFrame(X), pd.DataFrame(y)], axis = 1)
+    new_names_true = ['x_true_'+str(i) for i in range(1, N_true_inputs + 1)]
+    new_names_false = ['x_true_' +str(i) for i in range (1, N_false_inputs +1)]
+    names = new_names_true + new_names_false + ['y']
+    DF.columns = names
 
-# Now we split the data into an estimation and prediction sample. # Randomly draw n_obs obervations
-train_index = random.sample(range(0,N), np.int(n_obs))
-train_index.sort()
-DF_estimation = DF.loc[train_index, :]
-DF_prediction = DF.drop(index = train_index) 
+    # Now we split the data into an estimation and prediction sample. # Randomly draw n_obs obervations
+    train_index = random.sample(range(0,N), np.int(n_obs))
+    train_index.sort()
+    DF_estimation = DF.loc[train_index, :]
+    DF_prediction = DF.drop(index = train_index) 
 
-####### Algorithm ####################
-bfit = BestSubsetSelection(fK=5)
-bfit.fit(DF_estimation.drop('y', 1), DF_estimation['y'])
-bfit.predict(DF_prediction.drop('y',1))
-print(bfit.score(DF_prediction.drop('y',1), DF_prediction['y']))
+    ####### Algorithm ####################
+    bfit = BestSubsetSelection(fK=5)
+    bfit.fit(DF_estimation.drop('y', 1), DF_estimation['y'])
+    bfit.predict(DF_prediction.drop('y',1))
+    print(bfit.score(DF_prediction.drop('y',1), DF_prediction['y']))
