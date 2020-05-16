@@ -48,6 +48,7 @@ class BestSubsetSelectionOLS(BaseEstimator):
 #         best_model = 1
         #Return best_model
         best_predictors =  models.loc[models["rsq"].idxmax(), 'best_predictors']
+        print(fK, best_predictors)
         return best_model, best_predictors #later add feature_set
     
 # forwardK should be not applicable to best selection since best only choose a specific fK
@@ -59,7 +60,7 @@ class BestSubsetSelectionOLS(BaseEstimator):
         
         # hexin
         self.is_fitted_ = True
-        print(self.best_predictors)
+        # print(self.best_predictors)
         
         return self
     
