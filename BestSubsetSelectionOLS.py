@@ -45,7 +45,6 @@ class BestSubsetSelectionOLS(BaseEstimator):
         models = pd.DataFrame(results)
         # Choose the model with the highest rsq_adj
         best_model =  models.loc[models["rsq"].idxmax(), 'model']
-#         best_model = 1
         #Return best_model
         best_predictors =  models.loc[models["rsq"].idxmax(), 'best_predictors']
         print(fK, best_predictors)
