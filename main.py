@@ -21,9 +21,11 @@ beta[:N_true_inputs,:] = 1
 X = np.matrix(np.random.rand(N,P))
 epsilon = np.matrix(error_sd*np.random.normal(0,size=(N,1)))
 y = X*beta + epsilon
+y_label = y>1
 
 # Pack the data into a dataframe
-DF = pd.concat([pd.DataFrame(X),pd.DataFrame(y)],axis=1)
+#DF = pd.concat([pd.DataFrame(X),pd.DataFrame(y)],axis=1)
+DF = pd.concat([pd.DataFrame(X),pd.DataFrame(y_label)],axis=1)
 new_names_true = ['x_true_'+str(i) for i in range(1,N_true_inputs+1)]
 new_names_false = ['x_false_'+str(i) for i in range(1,N_false_inputs+1)]
 names = new_names_true + new_names_false + ['y']
@@ -37,6 +39,7 @@ DF_prediction = DF.drop(index=train_index)
 
 ###### GridSearchCV ######
 
+############
 # # forward
 # param_grid_pipe_fwd = {
 #     'fwd__fK': [1,2,3,4,5,6,7,8,9,10]
@@ -48,6 +51,7 @@ DF_prediction = DF.drop(index=train_index)
 # print(search.best_params_)
 # print(search.cv_results_)
 
+############
 # # backward
 # # the hyperparameter fK: is the least number of features included
 # param_grid_pipe_bwd = {
@@ -60,6 +64,7 @@ DF_prediction = DF.drop(index=train_index)
 # print(search.best_params_)
 # print(search.cv_results_)
 
+###########
 # best subset
 # the hyperparameter fK: is the number of features included
 param_grid_pipe_bst = {
